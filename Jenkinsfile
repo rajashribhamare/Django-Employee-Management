@@ -9,8 +9,9 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                // Explicitly use 'main' branch
-                git branch: 'main', url: 'https://github.com/username/django-employee-management.git'
+                git branch: 'main', 
+                    url: 'https://github.com/rajashribhamare/Django-Employee-Management.git', 
+                    credentialsId: 'github-pat'
             }
         }
 
@@ -62,4 +63,5 @@ pipeline {
         }
     }
 }
+
 
