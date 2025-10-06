@@ -6,9 +6,11 @@ pipeline {
     }
 
     stages {
+
         stage('Clone Repository') {
             steps {
-                git branch : 'main' ,url :'https://github.com/username/django-employee-management.git'
+                // Explicitly use 'main' branch
+                git branch: 'main', url: 'https://github.com/username/django-employee-management.git'
             }
         }
 
@@ -23,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Django Tests') {
             steps {
                 bat '''
                 call %VENV%\\Scripts\\activate
@@ -34,9 +36,21 @@ pipeline {
 
         stage('Build Complete') {
             steps {
-                echo '✅ Django build successful!'
+                echo '✅ Django project build successful!'
             }
         }
+
+        stage('Deploy (Optional)') {
+            steps {
+                bat '''
+                call %VENV%\\Scripts\\activate
+                python manage.py migrate
+                python manage.py collectstatic --noinput
+                '''
+                echo '🚀 Django project deployed successfully!'
+            }
+        }
+
     }
 
     post {
@@ -48,3 +62,4 @@ pipeline {
         }
     }
 }
+
