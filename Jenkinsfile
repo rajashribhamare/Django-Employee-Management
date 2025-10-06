@@ -15,6 +15,18 @@ pipeline {
             }
         }
 
+
+        stage('Check requirements.txt') {
+            steps {
+                bat '''
+                if not exist requirements.txt (
+                    echo "❌ requirements.txt is missing!"
+                    exit /b 1
+                )
+                '''
+            }
+        }
+
         stage('Set up Python Environment') {
             steps {
                 bat '''
@@ -30,7 +42,7 @@ pipeline {
             steps {
                 bat '''
                 call %VENV%\\Scripts\\activate
-                python manage.py test
+                python manage.py test || exit /b 1
                 '''
             }
         }
