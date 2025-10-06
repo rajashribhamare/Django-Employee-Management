@@ -1,0 +1,1 @@
+(accounts_dir / "__init__.py").write_text("", encoding='utf-8')

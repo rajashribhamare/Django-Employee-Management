@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer List</title>
+</head>
+<body>
+    <h2>Customers</h2>
+    <a href="{% url 'add_customer' %}">Add New Customer</a>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

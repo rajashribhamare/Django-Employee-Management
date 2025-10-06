@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  body {
+    background-color: #f2f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .dashboard-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .account-info p {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #34495e;
+  }
+
+  .transaction-header {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #2d3436;
+    border-bottom: 2px solid #ced6e0;
+    padding-bottom: 5px;
+  }
+
+  .transaction-list li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 6px;
+    border-radius: 6px;
+  }
+
+  .transaction-list li span {
+    font-weight: 500;
+  }
+
+  .credit {
+    color: #27ae60;
+  }
+
+  .debit {
+    color: #c0392b;
+  }
+</style>
+
+<div class="dashboard-container">
+  <div class="dashboard-title">Welcome, {{ customer.user.username }}</div>
+
+  <div class="account-info">
+    <p><strong>Account Number:</strong> {{ customer.account_number }}</p>
+    <p><strong>Current Balance:</strong> ₹{{ customer.balance|floatformat:2 }}</p>
+  </div>
+
+  <div class="transaction-header">Recent Transactions</div>
+  <ul class="transaction-list list-unstyled">
+    {% for txn in transactions %}
+      <li>
+        <span>{{ txn.timestamp|date:"Y-m-d H:i" }} - {{ txn.transaction_type }}</span>
+        <span class="{% if txn.transaction_type == 'Credit' %}credit{% else %}debit{% endif %}">
+          ₹{{ txn.amount|floatformat:2 }}
+        </span>
+      </li>
+    {% empty %}
+      <li>No transactions yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
+
+
