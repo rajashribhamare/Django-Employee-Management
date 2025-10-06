@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/username/django-employee-management.git'
+                git branch : 'main' ,url :'https://github.com/username/django-employee-management.git'
             }
         }
 
